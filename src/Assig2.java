@@ -184,6 +184,7 @@ public class Assig2
                 if (!pullRecord.saveWinnings(winnings))
                 {
                     System.out.print(pullRecord.toStringWinnings());
+                    quitGame = true;
                 }
             }
         }
