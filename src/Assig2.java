@@ -110,14 +110,17 @@ public class Assig2
     {
         // Initialize multiplierChecker to result from getPayMultiplier method
         int multiplierChecker = getPayMultiplier(thePull);
+        System.out.println("whirrrrrr .... and your pull is ... ");
         System.out.println(thePull.toString());
         // If the multiplierChecker above 0, that means users win some amount
         if (multiplierChecker > 0)
         {
             System.out.println("Congrats, you won " + winnings);
+            System.out.println("                             ");
         } else
         {
             System.out.println("Sorry, you lost.");
+            System.out.println("                ");
         }
     }
     
@@ -133,30 +136,26 @@ public class Assig2
             int validatedBet = getBet();
             if (validatedBet == 0)
             {
-                //System.out.print(pullRecord.toStringWinnings());
+                System.out.print(pullRecord.toStringWinnings());
                 quitGame = true;
             } else
             {
                 // Retrieve pulled strings
                 pullRecord = pull();
+                
                 // Retrieve the multiplier based on the pulled strings
                 int multiplier = getPayMultiplier(pullRecord);
+                
                 // Calculate the winning amount by multiplying bet
                 int winnings = validatedBet * multiplier;
+                
                 // Display pulled strings and winning amount on console
                 display(pullRecord, winnings);
-                
-                if (pullRecord.saveWinnings(winnings) == false)
+              
+                if (!pullRecord.saveWinnings(winnings))
                 {
                     System.out.print(pullRecord.toStringWinnings());
-                    quitGame = true;
-                } else
-                {
-                    pullRecord.saveWinnings(winnings);
-                    quitGame = false;
                 }
-                
-                
             }
         }
     }
@@ -261,23 +260,16 @@ class ThreeString
     // Concatenate three strings
     public String toString()
     {
-        return string1 + ' ' + string2 + ' ' + string3;
+        return string1 + " " + string2 + " " + string3;
     }
     
     // Return true if new winning is added to the pullWinnings array
     public boolean saveWinnings(int winnings)
     {
+        // Validate if current position is less than MAX_PULLS (40)
         if (numPulls < MAX_PULLS)
         {
-            System.out.println(winnings);
-            //System.out.println(pullWinnings.length);
             pullWinnings[numPulls] = winnings;
-            /* Just printing out for checking */
-            System.out.println("***Test***");
-            for (int i = 0; i < numPulls; i++)
-            {
-                System.out.print(pullWinnings[i] + ' ');
-            }
             numPulls++;
             return true;
         } else
@@ -290,6 +282,7 @@ class ThreeString
     public String toStringWinnings()
     {
         System.out.println("Thanks for playing at the Casino!");
+        System.out.println("You pulled the machine " + numPulls+ " times");
         // Initialize sum to 0 to start
         int sum = 0;
         System.out.println("Your individual winnings were: ");
@@ -297,8 +290,9 @@ class ThreeString
         for (int i = 0; i < numPulls; i++)
         {
             sum += pullWinnings[i];
-            System.out.println(pullWinnings[i] + ' ');
+            System.out.print(pullWinnings[i] + " ");
         }
+        System.out.println("\n" + "******************************");
         // Return statement with sum winning
         return "Your total winnings were: $" + sum;
     }
