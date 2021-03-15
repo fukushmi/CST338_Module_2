@@ -11,21 +11,21 @@ public class Assig2
         // Get user input bet
         Scanner keyboard = new Scanner(System.in);
         int bet = keyboard.nextInt();
-        // Set isValid to false
-        boolean isValid = false;
-        // Continue looping unless isValid changes to true
-        while (isValid == false)
+        // Continue looping unless entered value is in range 0-100
+        while (true)
         {
-            // If the bet is 0-100, then isValid changes to true, loop finishes
+            // If the bet is 0-100 then break out of loop
             if (bet == 0)
             {
-                isValid = true;
+                break;
             } else if (bet >= 1 && bet <= 100)
             {
-                isValid = true;
+                break;
             } else
             {
-                isValid = false;
+                System.out.print("Number must be in the range of 0-100, " +
+                   "try again: ");
+                bet = keyboard.nextInt();
             }
         }
         return bet;
@@ -185,8 +185,8 @@ class ThreeString
     // Function to validate string
     private boolean validString(String str)
     {
-        // Validate if string is not null and its length is less than or equal to
-        // MAX_LEN (20)
+        // Validate if string is not null and its length is less than or equal
+        // to MAX_LEN (20)
         if (str != null && str.length() <= MAX_LEN)
         {
             return true;
