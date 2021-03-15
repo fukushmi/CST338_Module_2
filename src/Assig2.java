@@ -1,3 +1,13 @@
+/* Student name: Miki Fukushima
+   CST338 Software Design
+   Module 2 Programming Assignment: Casino
+   
+   Program mimics slot machines after getting user input of 0-100
+   Generate strings randomly and calculate winning amount
+   Print both sum and each winning when users decide to quit the game
+   The game quits by either user entering 0 or if it reaches 40 max count
+ */
+
 import java.util.Scanner;
 
 public class Assig2
@@ -8,6 +18,7 @@ public class Assig2
     {
         System.out.print("How much would you like to bet (1-100)"
            + " or 0 to quit?: ");
+        
         // Get user input bet
         Scanner keyboard = new Scanner(System.in);
         int bet = keyboard.nextInt();
@@ -23,6 +34,7 @@ public class Assig2
                 break;
             } else
             {
+                // Prompt users for input again
                 System.out.print("Number must be in the range of 0-100, " +
                    "try again: ");
                 bet = keyboard.nextInt();
@@ -51,8 +63,10 @@ public class Assig2
     {
         // Generate random double value
         double randomDouble = Math.random() * 1000;
+        
         // Convert double value to integer
         int randomInt = (int) randomDouble;
+        
         // Initialize randomSelect to "" to start
         String randomSelect = "";
         
@@ -79,21 +93,31 @@ public class Assig2
     
     public static int getPayMultiplier(ThreeString thePull)
     {
+        // Initialize variables
         int multiplierValue = 0;
         String string1 = thePull.getString1();
         String string2 = thePull.getString2();
         String string3 = thePull.getString3();
         
+        // Validate the patterns of three strings
+        // Multiplier Rules
+        // 7 7 7 = x100
+        // BAR BAR BAR = x50
+        // cherries cherries cherries = x30
+        // cherries cherries not cherries = x15
+        // cherries not cherries any = x5
         if (string1 == "7" && string2 == "7" && string3 == "7")
         {
             multiplierValue = 100;
         } else if (string1 == "BAR" && string2 == "BAR" && string3 == "BAR")
         {
             multiplierValue = 50;
-        } else if (string1 == "cherries" && string2 == "cherries" && string3 == "cherries")
+        } else if (string1 == "cherries" && string2 == "cherries" &&
+           string3 == "cherries")
         {
             multiplierValue = 30;
-        } else if (string1 == "cherries" && string2 == "cherries" && string3 != "cherries")
+        } else if (string1 == "cherries" && string2 == "cherries" &&
+           string3 != "cherries")
         {
             multiplierValue = 15;
         } else if (string1 == "cherries" && string2 != "cherries")
@@ -110,8 +134,10 @@ public class Assig2
     {
         // Initialize multiplierChecker to result from getPayMultiplier method
         int multiplierChecker = getPayMultiplier(thePull);
+        
         System.out.println("whirrrrrr .... and your pull is ... ");
         System.out.println(thePull.toString());
+        
         // If the multiplierChecker above 0, that means users win some amount
         if (multiplierChecker > 0)
         {
@@ -127,8 +153,10 @@ public class Assig2
     public static void main(String[] args)
     {
         ThreeString pullRecord = new ThreeString();
+        
         // Set quitGame to false
         boolean quitGame = false;
+        
         // Continue to loop while quitGame is false
         while (!quitGame)
         {
@@ -151,7 +179,8 @@ public class Assig2
                 
                 // Display pulled strings and winning amount on console
                 display(pullRecord, winnings);
-              
+                
+                // If saveWinnings returns not true, display last message
                 if (!pullRecord.saveWinnings(winnings))
                 {
                     System.out.print(pullRecord.toStringWinnings());
@@ -165,12 +194,16 @@ class ThreeString
 {
     // Defining and initializing variables
     private String string1, string2, string3;
+    
     // Initialize to 0 as the starting position shall be 0
     private static int numPulls = 0;
+    
     // Initialize to 20, representing the maximum length for each string
     public static final int MAX_LEN = 20;
+    
     // Initialize to 40 as the maximum pull count is 40
     public static final int MAX_PULLS = 40;
+    
     // Initialize integer array with size 40
     private static int[] pullWinnings = new int[MAX_PULLS];
     
@@ -269,7 +302,9 @@ class ThreeString
         // Validate if current position is less than MAX_PULLS (40)
         if (numPulls < MAX_PULLS)
         {
+            // Append winning value to current position
             pullWinnings[numPulls] = winnings;
+            // Increment by 1
             numPulls++;
             return true;
         } else
